@@ -1,7 +1,23 @@
-FROM node:18.19.1-alpine
-WORKDIR /usr/src/app
+# Use the official Node.js image as a base
+FROM node:18
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
+
+# Copy the rest of the application code
 COPY . .
+
+# Build the application
+RUN npm run build
+
+# Expose the port (if necessary)
 EXPOSE 3000
-CMD ["npm", "start"]
+
+# Start the application
+CMD ["npm", "start"]
