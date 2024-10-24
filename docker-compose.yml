@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+    ecommerce-multivendor-backend-master:
+    image: ecommerce-multivendor-backend-master
+    container_name: ecommerce-multivendor-backend-master-con1
+    ports:
+      - "8082:8082"
+    networks:
+      - ecommerce-multivendor
+
+ ecommerce-multivendor-frontend-master:
+    image: ecommerce-multivendor-frontend-master
+    container_name: ecommerce-multivendor-backend-master-con2
+    ports:
+      - "3000:3000"
+    networks:
+      - ecommerce-multivendor
+
+
+networks:
+  ecommerce-multivendor:
+    driver: bridge
