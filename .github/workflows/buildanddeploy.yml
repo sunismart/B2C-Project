@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main  # Change this to the branch you want to trigger the workflow on
+      - master  # Change this to the branch you want to trigger the workflow on
 
 jobs:
   build:
@@ -31,7 +31,4 @@ jobs:
         run: mvn clean install -X
         working-directory: /home/runner/work/B2C-Project/B2C-Project/ecommerce-multivendor-backend-master
 
-      - name: Print Surefire Test Reports
-        if: failure()
-        run: cat /home/runner/work/B2C-Project/B2C-Project/ecommerce-multivendor-backend-master/target/surefire-reports/*.txt
-        continue-on-error: true
+     
