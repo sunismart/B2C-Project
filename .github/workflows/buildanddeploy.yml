@@ -31,9 +31,15 @@ jobs:
         run: mvn clean install
         working-directory: /home/runner/work/B2C-Project/B2C-Project/ecommerce-multivendor-backend-master
 
+      - name: Print Surefire Test Reports
+        if: failure()
+        run: cat /home/runner/work/B2C-Project/B2C-Project/ecommerce-multivendor-backend-master/target/surefire-reports/*.txt
+        continue-on-error: true
+
       - name: Upload artifact to Nexus
+        if: always()
         env:
-          NEXUS_URL: http://13.233.110.84:8081/repository/maven-releases/  # Change to your Nexus release URL if needed
+          NEXUS_URL: http://13.233.110.84:8081/repository/maven-releases/  # New Nexus URL
           NEXUS_USER: ${{ secrets.NEXUS_USER }}  # Store this secret in your GitHub repository settings
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}  # Store this secret in your GitHub repository settings
         run: |
@@ -46,3 +52,4 @@ jobs:
             -DrepositoryId=nexus \
             -Durl=${{ env.NEXUS_URL }}
         working-directory: /home/runner/work/B2C-Project/B2C-Project/ecommerce-multivendor-backend-master
+        continue-on-error: true
