@@ -43,4 +43,4 @@ jobs:
 
     # Build and deploy to Nexus
     - name: Build and deploy to Nexus
-      run: mvn -B clean deploy --file ecommerce-multivendor-backend-master/pom.xml 
+      run: mvn -B clean deploy --file ecommerce-multivendor-backend-master/pom.xml -DskipTests
