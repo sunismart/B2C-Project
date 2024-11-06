@@ -29,14 +29,14 @@ jobs:
         echo "<settings>
                 <servers>
                   <server>
-                    <id>nexus-releases</id>
-                    <username>${{ secrets.NEXUS_USERNAME }}</username>
-                    <password>${{ secrets.NEXUS_PASSWORD }}</password>
+                    <id>nexus-snapshots</id>
+                    <username>admin</username>
+                    <password>nexus</password>
                   </server>
                   <server>
-                    <id>nexus-snapshots</id>
-                    <username>${{ secrets.NEXUS_USERNAME }}</username>
-                    <password>${{ secrets.NEXUS_PASSWORD }}</password>
+                    <id>nexus-releases</id>
+                    <username>admin</username>
+                    <password>nexus</password>
                   </server>
                 </servers>
               </settings>" > ~/.m2/settings.xml
