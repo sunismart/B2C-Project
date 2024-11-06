@@ -22,6 +22,25 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    # Build the project using Maven
-    - name: Build with Maven
-      run: mvn -B clean package --file ecommerce-multivendor-backend-master/pom.xml -DskipTests
+    # Set up Maven settings for Nexus deployment
+    - name: Set up Maven settings
+      run: |
+        mkdir -p ~/.m2
+        echo "<settings>
+                <servers>
+                  <server>
+                    <id>nexus-release</id>
+                    <username>${{ secrets.NEXUS_USERNAME }}</username>
+                    <password>${{ secrets.NEXUS_PASSWORD }}</password>
+                  </server>
+                  <server>
+                    <id>nexus-snapshot</id>
+                    <username>${{ secrets.NEXUS_USERNAME }}</username>
+                    <password>${{ secrets.NEXUS_PASSWORD }}</password>
+                  </server>
+                </servers>
+              </settings>" > ~/.m2/settings.xml
+
+    # Build and deploy to Nexus
+    - name: Build and deploy to Nexus
+      run: mvn -B clean deploy --file ecommerce-multivendor-backend-master/pom.xml -DskipTests
