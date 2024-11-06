@@ -33,7 +33,7 @@ jobs:
 
       - name: Upload artifact to Nexus
         env:
-          NEXUS_URL: http://15.206.80.94:8081/repository/maven-releases/  # Change to your Nexus release URL if needed
+          NEXUS_URL: http://13.233.110.84:8081/repository/maven-releases/  # Change to your Nexus release URL if needed
           NEXUS_USER: ${{ secrets.NEXUS_USER }}  # Store this secret in your GitHub repository settings
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}  # Store this secret in your GitHub repository settings
         run: |
