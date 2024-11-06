@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -30,6 +29,9 @@ jobs:
     - name: Update dependency graph
       run: mvn com.github.ferstl:depgraph-maven-plugin:4.0.1:graph --file ecommerce-multivendor-backend-master/pom.xml
 
-   
-
-
+    # Deploy artifact to Nexus
+    - name: Deploy to Nexus Repository
+      run: mvn deploy --settings .github/maven-settings.xml --file ecommerce-multivendor-backend-master/pom.xml
+      env:
+        MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
