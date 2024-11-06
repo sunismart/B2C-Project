@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main  # Change this to the branch you want to trigger the workflow on
+      - master  # Change this to the branch you want to trigger the workflow on
 
 jobs:
   build:
@@ -29,7 +29,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
-        working-directory: ./ecommerce-multivendor-backend-master  # Adjust this path if necessary
+        working-directory: /home/runner/work/B2C-Project/B2C-Project/ecommerce-multivendor-backend-master
 
       - name: Upload artifact to Nexus
         env:
@@ -45,4 +45,4 @@ jobs:
             -Dfile=target/my-artifact-1.0.0.jar \
             -DrepositoryId=nexus \
             -Durl=${{ env.NEXUS_URL }}
-        working-directory: ./ecommerce-multivendor-backend-master  # Ensure Maven runs in the correct directory
+        working-directory: /home/runner/work/B2C-Project/B2C-Project/ecommerce-multivendor-backend-master
