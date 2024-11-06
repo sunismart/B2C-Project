@@ -22,9 +22,16 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    # Build the project using Maven
+    # Build the project using Maven (skip tests)
     - name: Build with Maven
       run: mvn -B clean package --file ecommerce-multivendor-backend-master/pom.xml -DskipTests
+
+    # Deploy the artifact to Nexus repository
+    - name: Deploy to Nexus
+      run: mvn deploy --file ecommerce-multivendor-backend-master/pom.xml
+      env:
+        NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
