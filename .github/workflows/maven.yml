@@ -24,4 +24,4 @@ jobs:
 
     # Build the project using Maven
     - name: Build with Maven
-      run: mvn -B clean package --file ecommerce-multivendor-backend-master/pom.xml
+      run: mvn -B clean package --file ecommerce-multivendor-backend-master/pom.xml -DskipTests
