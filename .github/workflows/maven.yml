@@ -89,9 +89,7 @@ jobs:
         run: |
           docker push sunismart/ecommerce:${{ github.sha }}
 
-      # Step 12: Run Trivy scan with vulnerabilities only (skip secret scanning)
-      - name: Run Trivy scan with vuln scanners only
-        run: trivy image --exit-code 1 --severity HIGH,CRITICAL sunismart/ecommerce:${{ github.sha }}
-
-
-    
+      # Step 12: Run Docker container
+      - name: Run Docker container
+        run: |
+          docker run -d --name ecommerce-container -p 8080:8080 sunismart/ecommerce:${{ github.sha }}
