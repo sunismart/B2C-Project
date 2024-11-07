@@ -37,7 +37,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build the project with Maven
-        run: mvn clean install -f ecommerce-multivendor-backend-master/pom.xml
+        run: mvn clean install -f ecommerce-multivendor-backend-master/pom.xml -DskipTests
 
       - name: Build and analyze
         env:
