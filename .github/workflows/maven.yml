@@ -94,10 +94,23 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y trivy
 
-      # Step 12: Scan Docker image with Trivy
+      # Step 12: Scan Docker image with Trivy and retry on failure
       - name: Scan Docker image with Trivy
         run: |
-          trivy image sunismart/ecommerce:${{ github.sha }}
+          retries=3
+          for i in $(seq 1 $retries); do
+            if trivy image sunismart/ecommerce:${{ github.sha }}; then
+              echo "Trivy scan successful."
+              break
+            elif [ $i -lt $retries ]; then
+              echo "Trivy scan failed. Retrying in 60 seconds... (Attempt $i of $retries)"
+              sleep 60
+            else
+              echo "All retry attempts failed."
+              exit 1
+            fi
+          done
+
 
       # Step 13: Push Docker image to Docker Hub
       - name: Push Docker image to Docker Hub
