@@ -65,3 +65,20 @@ jobs:
       - name: Login to Docker Hub
         run: |
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+  # The Dockerfile to build the image is below:
+  dockerfile: |
+    # Use a smaller base image to run Java
+    FROM openjdk:17-jdk-slim
+
+    # Set the working directory in the container
+    WORKDIR /app
+
+    # Copy the JAR file from the GitHub Action artifact directory to the container
+    COPY target/ecommerce-multivendor-backend.jar /app/ecommerce-multivendor-backend.jar
+
+    # Expose the port that the application will run on
+    EXPOSE 8080
+
+    # Command to run the application
+    ENTRYPOINT ["java", "-jar", "/app/ecommerce-multivendor-backend.jar"]
