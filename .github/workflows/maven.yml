@@ -84,12 +84,29 @@ jobs:
         run: |
           docker build -t sunismart/ecommerce:${{ github.sha }} -f ecommerce-multivendor-backend-master/Dockerfile ecommerce-multivendor-backend-master
 
-      # Step 11: Push Docker image to Docker Hub
+      # Step 11: Install Trivy
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
+
+      # Step 12: Scan Docker image with Trivy
+      - name: Scan Docker image with Trivy
+        run: |
+          trivy image sunismart/ecommerce:${{ github.sha }}
+
+      # Step 13: Push Docker image to Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
           docker push sunismart/ecommerce:${{ github.sha }}
 
-      # Step 12: Run Docker container
+      # Step 14: Run Docker container
       - name: Run Docker container
         run: |
-          docker run -d --name ecommerce-container -p 8080:8080 sunismart/ecommerce:${{ github.sha }}
+          docker run -d --name ecommerce-container -p 8080:8080 sunismart/ecommerce:${{ github.sha }}          
+
+     
