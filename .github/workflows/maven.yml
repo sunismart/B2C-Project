@@ -88,3 +88,14 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
           docker push sunismart/ecommerce:${{ github.sha }}
+
+      # Step 12: Install Trivy
+      - name: Install Trivy
+        run: |
+          curl -sfL https://github.com/aquasecurity/trivy/releases/download/v0.39.0/trivy_0.39.0_Linux-64bit.tar.gz | tar xz -C /usr/local/bin
+
+      # Step 13: Run Trivy scan
+      - name: Scan Docker image for vulnerabilities with Trivy
+        run: |
+          trivy image --exit-code 1 --severity HIGH,CRITICAL sunismart/ecommerce:${{ github.sha }}
+
