@@ -89,26 +89,9 @@ jobs:
         run: |
           docker push sunismart/ecommerce:${{ github.sha }}
 
-      # Step 12: Download and cache Trivy vulnerability database (one-time download)
-      - name: Cache Trivy vulnerability database
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/trivy
-          key: ${{ runner.os }}-trivy-db
-          restore-keys: |
-            ${{ runner.os }}-trivy-db
-
-      # Step 13: Run Trivy scan with vulnerabilities only (skip secret scanning)
+      # Step 12: Run Trivy scan with vulnerabilities only (skip secret scanning)
       - name: Run Trivy scan with vuln scanners only
-        run: trivy image --exit-code 1 --severity HIGH,CRITICAL --scanners vuln sunismart/ecommerce:${{ github.sha }}
+        run: trivy image --exit-code 1 --severity HIGH,CRITICAL sunismart/ecommerce:${{ github.sha }}
 
-      # Step 14: Run Trivy scan with retries (optional)
-      - name: Run Trivy scan with retries
-        run: |
-          retries=3
-          while [ $retries -gt 0 ]; do
-            trivy image --exit-code 1 --severity HIGH,CRITICAL sunismart/ecommerce:${{ github.sha }} && break
-            retries=$((retries-1))
-            echo "Retrying in 10 seconds..."
-            sleep 10
-          done
+
+    
