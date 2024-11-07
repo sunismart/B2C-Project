@@ -70,7 +70,7 @@ jobs:
       # Add Docker build and push steps here
       - name: Build Docker image
         run: |
-          docker build -t your-docker-image-name:latest .
+          docker build -t your-docker-image-name:latest . --file ecommerce-multivendor-backend-master
 
       - name: Push Docker image to Docker Hub
         run: |
