@@ -70,11 +70,11 @@ jobs:
         run: |
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      # Build Docker image after Maven build
+      # Build Docker image 
       - name: Build Docker image
         run: |
-          docker build -t your-docker-image-name:latest -f ecommerce-multivendor-backend-master/Dockerfile ecommerce-multivendor-backend-master
+          docker build -t ecommerce-img:latest -f ecommerce-multivendor-backend-master/Dockerfile ecommerce-multivendor-backend-master
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push your-docker-image-name:latest
+          docker push ecommerce-img:latest
